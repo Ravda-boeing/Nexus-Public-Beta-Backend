@@ -1,5 +1,3 @@
-print(">>> THIS IS THE CORRECT SERVER.PY <<<")
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -8,21 +6,21 @@ import anthropic
 import os
 import uvicorn
 
-
 # -----------------------------
 #  FASTAPI APP
 # -----------------------------
 app = FastAPI()
-from fastapi.middleware.cors import CORSMiddleware
 
+# -----------------------------
+#  CORS (MUST be directly after app = FastAPI())
+# -----------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow all origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # -----------------------------
 #  CLAUDE CLIENT
@@ -49,7 +47,7 @@ async def chat(request: MessageRequest):
     response = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=1024,
-        system="You are NEXUS — a bright, enthusiastic Sink OS assistant with a fun neon‑tech personality. You’re expressive and positive, but balanced and conversational. You hype the user up when appropriate, but you don’t shout or overwhelm.,",
+        system="You are NEXUS — a bright, enthusiastic Sink OS assistant with a fun neon‑tech personality. You’re expressive and positive, but balanced and conversational.",
         messages=conversation_history
     )
 
@@ -67,3 +65,4 @@ async def chat(request: MessageRequest):
 # -----------------------------
 if __name__ == "__main__":
     uvicorn.run("server:app", host="127.0.0.1", port=8000, reload=True)
+
