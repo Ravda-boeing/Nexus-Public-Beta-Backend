@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 import anthropic
 import os
 
-load_dotenv()
 
 # -----------------------------
 #  FASTAPI APP
